@@ -1,4 +1,4 @@
-import { styled } from "./styles/index"
+import { styled } from "../styles/index"
 
 const Button = styled('button', {
   backgroundColor: '$green500',
