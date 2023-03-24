@@ -8,6 +8,7 @@ import { Container, Header } from "../styles/pages/app"
 
 globalStyles()
 
+
 function App({ Component, pageProps }: AppProps) {
   return (
     <Container>
