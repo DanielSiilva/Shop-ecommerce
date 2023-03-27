@@ -1,5 +1,6 @@
 import { GetStaticPaths, GetStaticProps } from "next"
 import Image from "next/image";
+import { useRouter } from "next/router";
 import Stripe from "stripe";
 import { stripe } from "../../lib/stripe";
 import { ImageContainer, ProductContainer, ProductDetails } from "../../styles/pages/product"
@@ -14,11 +15,19 @@ interface ProductProps {
   }
 }
 export default function Product({ product }: ProductProps) {
+  const {isFallback} = useRouter()
+
+  if(isFallback){
+    <p>Carregando...</p>
+  }
+  
   return (
     <ProductContainer>
+
       <ImageContainer>
         <Image src={product.imageUrl} width={520} height={480} alt="" />
       </ImageContainer>
+
       <ProductDetails>
         <h1>{product.name}</h1>
         <span>{product.price}</span>
@@ -38,7 +47,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
         params: { id: 'prod_Na9fk2DraR2iA0' } //id não é o do produto
       }
     ],
-    fallback: false,
+    fallback: true,
   }
 }
 
