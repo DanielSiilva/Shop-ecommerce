@@ -1,5 +1,4 @@
 /** @type {import('next').NextConfig} */
-
 const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
@@ -9,5 +8,13 @@ const nextConfig = {
       'files.stripe.com',
     ],
   },
+
+  experimental: {
+    newNextLinkBehavior: true,
+    images: {
+      allowFutureImage: true,
+    },
+  },
 }
+
 module.exports = nextConfig

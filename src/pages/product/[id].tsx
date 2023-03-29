@@ -1,6 +1,7 @@
 import axios from "axios";
 import { GetStaticPaths, GetStaticProps } from "next"
-import Image from "next/image";
+import Image from "next/future/image";
+import Head from "next/head";
 import { useState } from "react";
 import Stripe from "stripe";
 import { stripe } from "../../lib/stripe";
@@ -39,23 +40,31 @@ export default function Product({ product }: ProductProps) {
   }
 
   return (
-    <ProductContainer>
-      <ImageContainer>
-        <Image src={product.imageUrl} width={520} height={480} alt="" />
-      </ImageContainer>
-      <ProductDetails>
-        <h1>{product.name}</h1>
-        <span>{product.price}</span>
+    <>
+      <Head>
+        <title>{product.name} | Ignite Shop</title>
+      </Head>
 
-        <p>{product.description}</p>
+      <ProductContainer>
+        <ImageContainer>
+          <Image src={product.imageUrl} width={520} height={480} alt="" />
+        </ImageContainer>
 
-        <button disabled={isCreatingCheckoutSession} onClick={handleBuyButton}>
-          Comprar agora
-        </button>
-      </ProductDetails>
-    </ProductContainer>
+        <ProductDetails>
+          <h1>{product.name}</h1>
+          <span>{product.price}</span>
+
+          <p>{product.description}</p>
+
+          <button disabled={isCreatingCheckoutSession} onClick={handleBuyButton}>
+            Comprar agora
+          </button>
+        </ProductDetails>
+      </ProductContainer>
+    </>
   )
 }
+
 export const getStaticPaths: GetStaticPaths = async () => {
   return {
     paths: [
@@ -64,14 +73,16 @@ export const getStaticPaths: GetStaticPaths = async () => {
     fallback: 'blocking',
   }
 }
-export const getStaticProps: GetStaticProps<any, { id: string }> = async ({ params }) => {
 
+export const getStaticProps: GetStaticProps<any, { id: string }> = async ({ params }) => {
   const productId = params.id;
+
   const product = await stripe.products.retrieve(productId, {
     expand: ['default_price']
   });
-  
+
   const price = product.default_price as Stripe.Price;
+
   return {
     props: {
       product: {
