@@ -59,8 +59,9 @@ export const getStaticProps: GetStaticProps = async () => {
     expand: ['data.default_price']
   });
 
-
+  //Criando um novo objeto apenas com os dados que preciso
   const products = response.data.map(product => {
+
     const price = product.default_price as Stripe.Price;
 
     return {
@@ -72,6 +73,7 @@ export const getStaticProps: GetStaticProps = async () => {
         currency: 'BRL'
       }).format(price.unit_amount / 100),
     }
+
   })
 
   return {
