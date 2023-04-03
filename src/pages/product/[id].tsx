@@ -65,6 +65,8 @@ export default function Product({ product }: ProductProps) {
   )
 }
 
+// Para paginas que precisam de uma informação(Parametro) usamos o getStaticPaths, que nos permite gera uma versão estatica do projeto 
+
 export const getStaticPaths: GetStaticPaths = async () => {
   return {
     paths: [
