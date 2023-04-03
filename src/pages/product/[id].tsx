@@ -7,6 +7,8 @@ import Stripe from "stripe";
 import { stripe } from "../../lib/stripe";
 import { ImageContainer, ProductContainer, ProductDetails } from "../../styles/pages/product"
 
+import { useRouter } from "next/router";
+
 interface ProductProps {
   product: {
     id: string
@@ -20,6 +22,13 @@ interface ProductProps {
 
 export default function Product({ product }: ProductProps) {
   const [isCreatingCheckoutSession, setIsCreatingCheckoutSession] = useState(false);
+
+  //Se o fallback for true 
+  // const {isFallback} = useRouter()
+
+  // if(isFallback){
+  //   return <p>Carregando itens</p>
+  // }
 
   async function handleBuyButton() {
     try {
@@ -68,11 +77,17 @@ export default function Product({ product }: ProductProps) {
 // Para paginas que precisam de uma informação(Parametro) usamos o getStaticPaths, que nos permite gera uma versão estatica do projeto 
 
 export const getStaticPaths: GetStaticPaths = async () => {
+  //Podemos passar os produtos mais acesseados ou mais vendidos diretamente na build
+
+
+
   return {
     paths: [
       { params: { id: 'prod_MLH5Wy0Y97hDAC' } },
     ],
-    fallback: 'blocking',
+     fallback: 'blocking',
+    // fallcack: true
+
   }
 }
 
