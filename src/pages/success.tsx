@@ -43,6 +43,8 @@ export default function Success({ costumerName, product }: SuccessProps) {
 }
 
 export const getServerSideProps: GetServerSideProps = async ({ query }) => {
+  //Realiza a verificação: se o id não for passado, o usario será redirecionado para a home
+  
   if (!query.session_id) {
     return {
       redirect: {
